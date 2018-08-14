@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="2" status="warn">
+	<Properties>
+		<Property name="basePath">${sys:user.home}/logs/app</Property>
+	</Properties>
+	<Loggers>
+		<Root>
+			<AppenderRef ref="console" />
+		</Root>
+		<Logger name="io.icodetech.springloggerinjector" 
+				level="INFO" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.web" 
+				level="ERROR" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.web.filter.CommonsRequestLoggingFilter"
+				level="DEBUG" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="com"
+				level="ERROR" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org"
+				level="ERROR" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="hsqldb"
+				level="ERROR" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.hibernate"
+				level="ERROR" 
+				additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+	</Loggers>
+
+	<Appenders>
+		<!-- 1. Console Appender -->
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[ %d{yyyy-MMM-dd HH:mm:ss a} ] [ %-5level ] [ %t ] - %logger{1.} : %msg%n" />
+		</Console>
+
+		<RollingFile name="RollingFile"
+			fileName="${basePath}/logging.log"
+			filePattern="${basePath}/history/logging_%d{yyyy-MM-dd}.log.gz">
+			<PatternLayout
+				pattern="[ %d{yyyy-MMM-dd HH:mm:ss a} ] [ %-5level ] [ %t ] - %logger{1.} : %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="300 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" compressionLevel="9" />
+		</RollingFile>
+	</Appenders>
+</Configuration>
